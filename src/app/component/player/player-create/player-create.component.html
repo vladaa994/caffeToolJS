@@ -1,0 +1,17 @@
+<div class="createForm">
+<form #f="ngForm" (ngSubmit)="createPlayer(f)">
+	<div class="form-group">
+		<mat-form-field>
+			<input matInput name="firstname" placeholder="Firstname" #firstname="ngModel" [(ngModel)] = "playerService.selectedPlayer.firstname" >
+		</mat-form-field>	
+	</div>
+	
+	<div class="form-group">
+		<mat-form-field>
+			<input matInput name="lastname" placeholder="Lastname" #lastname="ngModel"  [(ngModel)] = "playerService.selectedPlayer.lastname" >
+		</mat-form-field>	
+	</div>
+	
+	<button mat-raised-button color="primary">Create</button>
+</form>
+</div>

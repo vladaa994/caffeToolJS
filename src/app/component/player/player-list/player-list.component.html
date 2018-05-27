@@ -1,0 +1,42 @@
+<div class="row">
+	<div class="col-md-5">
+		<h1>Rank</h1>	
+	</div>
+
+	<div class="col-md-3">
+		<button mat-raised-button color="warn" routerLink="deleted-players">Show deleted players</button>
+	</div>
+	<div class="col-md-3">
+		<button mat-raised-button color="primary" routerLink="create-player">Create player</button>
+	</div>
+</div>
+<br>
+<div class="row">
+	<div class="col-md-6">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<td>No.</td>
+					<td>Firstname</td>
+					<td>Lastname</td>
+					<td>Win</td>
+					<td>Lost</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let player of playerService.activePlayers; let i = index">
+					<td>{{ i+1 }}</td>
+					<td>{{ player.firstname }}</td>
+					<td>{{ player.lastname }}</td>
+					<td>{{ player.win }}</td>
+					<td>{{ player.lost }}</td>
+					<td><button mat-raised-button color="accent" [routerLink]="['edit-player', player.id]">Edit</button></td>
+					<td><button mat-raised-button color="warn" (click)="deletePlayer(player)">Delete</button></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="col-md-6">
+		<router-outlet></router-outlet>	
+	</div>
+</div>

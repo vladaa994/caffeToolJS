@@ -1,0 +1,40 @@
+<div class="row">
+	<div class="col-md-4">
+		<h2>Waiters List:</h2>
+	</div>	
+	<div class="col-md-3">
+		<button type="button" routerLink="user-create" mat-raised-button color="warn">Create Waiter</button>
+	</div>
+	<div class="col-md-3">
+		<button type="button" routerLink="user-deleted" mat-raised-button color="primary">Show deleted</button>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<div class="table table-hover">
+			<thead>
+				<tr>
+					<td><strong>Username</strong></td>
+				</tr>
+			</thead>
+			<tbody *ngFor="let user of userService.activeUsers">
+				<tr>
+					<td>{{ user.username }}</td>
+					<td><button mat-raised-button color="accent" [routerLink]= "['user-edit', user.id]" ><i class="fa fa-edit"></i> Edit</button></td>
+					<td><button mat-raised-button color="warn" (click)="delete(user.id)"><i class="fa fa-trash"></i> Delete</button></td>
+				</tr>
+			</tbody>
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<router-outlet></router-outlet>	
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-8" *ngIf="userService.errorMsg != ''">
+		<div class="alert alert-danger">
+			<strong>{{ userService.errorMsg }}</strong>
+		</div>
+	</div>
+</div>

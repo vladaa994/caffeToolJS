@@ -1,0 +1,21 @@
+<div class="col-md-6">
+		<div class="table table-hover">
+			<thead>
+				<tr>
+					<td><strong>Username</strong></td>
+					<td><strong>Active</strong></td>
+				</tr>
+			</thead>
+			<tbody *ngFor="let item of userService.removedUsers">
+				<tr>
+					<td>{{ item.username }}</td>
+					<td>{{ item.active }}</td>
+					<td><button class="btn btn-success" (click)="enableUser(item.id)">Enable</button></td>
+				</tr>
+			</tbody>
+		</div>
+
+        <div class="alert alert-danger errorMsg" *ngIf="errorMsg">
+              <p><strong>{{ errorMsg }}</strong></p>  
+        </div>
+	</div>

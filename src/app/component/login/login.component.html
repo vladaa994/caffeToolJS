@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-md-7">
+      <div class="loginForm">
+          <h1>Login:</h1>
+          <form #f = "ngForm" (ngSubmit) = "onLogin(f)">
+            <div class="form-group">
+              <input type="text" class="form-control" name="username" placeholder="username" required ngModel >
+            </div><br>
+            <div class="form-group">
+              <input type="password" class="form-control" name="password" placeholder="password" required ngModel >
+            </div><br>
+            <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Login</button>
+            <br>
+            <div class="alert alert-danger errorMsg" *ngIf="loginError">
+              <p><strong>{{ loginError }}</strong></p>  
+            </div>
+          </form>
+      </div>
+  </div>
+</div>

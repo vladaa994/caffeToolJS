@@ -1,0 +1,38 @@
+<h4>Create User:</h4>
+
+<div class="row">
+	<div class="col-md-5">
+		<form #f="ngForm" (ngSubmit)= "create(f)">
+			<input type="hidden" name="id" #id="ngModel" [(ngModel)] = "userService.selectedUser.id">
+			<mat-form-field>
+				<input type="text" matInput placeholder="username" (blur)="checkUsername($event.target.value)" name="username"  #username="ngModel" [(ngModel)]="userService.selectedUser.username" required>
+			</mat-form-field>
+
+			<div class="alert alert-danger errorMsg" *ngIf="username.invalid && username.touched">
+				<strong>Username is required!</strong>
+			</div>
+
+			<div class="alert alert-danger errorMsg" *ngIf="errorMsg">
+              <p><strong>{{ errorMsg }}</strong></p>  
+            </div>
+            
+			<mat-form-field>
+				<input type="password" matInput placeholder="password" name="password" required  #password="ngModel"
+				 [(ngModel)] = "userService.selectedUser.password">
+			</mat-form-field>
+			<mat-form-field>
+				<mat-select name="roleId" required #role="ngModel" [(ngModel)] = "userService.selectedUser.roleId">
+					<mat-option>--</mat-option>
+					<mat-option *ngFor="let role of roles" value="{{role.id}}" >{{role.name | titlecase}}</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<button type="submit" mat-raised-button color="accent" [disabled] = "!f.valid"><i class="fa fa-user"></i> Create</button>
+			<button type="button" mat-raised-button color="primary" (click)= "resetForm()"><i class="fa fa-undo"></i>
+ Reset</button>	
+			<br>
+		</form>		
+	</div>
+</div>
+
+
+

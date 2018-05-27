@@ -1,0 +1,26 @@
+<div class="navigationButtons">
+	<div class="topNav">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-4">
+					<button class="btn btn-success waitersBtn" (click)= "redirectToUsers()"><strong>Users</strong></button><br>
+				</div>
+				<div class="col-md-4">
+					<button class="btn btn-info playersBtn" (click)= "redirectToPlayers()"><strong>Players</strong></button>
+				</div>
+			</div>	
+		</div>
+	</div>
+	<div class="bottomNav">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-4">
+					<button class="btn btn-warning biliardBtn" (click)= "redirectToBiliard()"><strong>Biliard</strong></button>		
+				</div>
+				<div class="col-md-4">
+					<button class="btn btn-danger logoutBtn" (click)="logout()"><strong>Logout</strong></button>
+				</div>
+			</div>	
+		</div>
+	</div>	
+</div>
