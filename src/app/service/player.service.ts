@@ -17,7 +17,7 @@ export class PlayerService {
   constructor(private http: HttpClient, private config : ConfigService) { }
 
   getActivePlayers() {
-	return this.http.get<IPlayer[]>(this.config.baseUrl + "player/active", {headers: this.config.authorizationHeader})
+	return this.http.get<IPlayer[]>(this.config.baseUrl + "player/active", {headers: {'Authorization': localStorage.getItem("token")}})
 	.map(
 		(result) => {
 			return result;
@@ -31,7 +31,7 @@ export class PlayerService {
 
 
   getRemovedPlayers() {
-  	return this.http.get<IPlayer[]>(this.config.baseUrl + "player/removed", {headers: this.config.authorizationHeader})
+  	return this.http.get<IPlayer[]>(this.config.baseUrl + "player/removed", {headers: {'Authorization': localStorage.getItem("token")}})
   		.map(
   			(response) => {
   				return response;
@@ -44,7 +44,7 @@ export class PlayerService {
   }
 
   createPlayer(player : NgForm) {
-  	return this.http.post<IPlayer>(this.config.baseUrl + "player/save", player.value, {headers: this.config.authorizationHeader})
+  	return this.http.post<IPlayer>(this.config.baseUrl + "player/save", player.value, {headers: {'Authorization': localStorage.getItem("token")}})
   		.map(
   			(response) => {
   				return response;
@@ -53,7 +53,7 @@ export class PlayerService {
   }
 
   deletePlayer(player : IPlayer) {
-  	return this.http.get(this.config.baseUrl + "player/delete/" + player.id, {headers: this.config.authorizationHeader})
+  	return this.http.get(this.config.baseUrl + "player/delete/" + player.id, {headers: {'Authorization': localStorage.getItem("token")}})
   	.map(
   		(response) => {
   			return response;
@@ -63,7 +63,7 @@ export class PlayerService {
 
   //function to retreive player from server and populate form fields
   edit(id : number) : Observable<IPlayer> {
-  	return this.http.get<IPlayer>(this.config.baseUrl + "player/" + id, {headers: this.config.authorizationHeader})
+  	return this.http.get<IPlayer>(this.config.baseUrl + "player/" + id, {headers: {'Authorization': localStorage.getItem("token")}})
   		.map(
   			(result) => {
   				return result;
@@ -73,11 +73,11 @@ export class PlayerService {
 
   //function to update player
   update(player : IPlayer) : Observable<IPlayer> {
-  	return this.http.put<IPlayer>(this.config.baseUrl + "player/update/" + player.id, player, {headers: this.config.authorizationHeader});
+  	return this.http.put<IPlayer>(this.config.baseUrl + "player/update/" + player.id, player, {headers: {'Authorization': localStorage.getItem("token")}});
   }
 
   enablePlayer(id : number) {
-  	return this.http.get(this.config.baseUrl + "player/enable/" + id, {headers: this.config.authorizationHeader})
+  	return this.http.get(this.config.baseUrl + "player/enable/" + id, {headers: {'Authorization': localStorage.getItem("token")}})
   		.map(
   			(response) => {
   				return response;

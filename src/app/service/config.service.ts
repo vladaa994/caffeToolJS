@@ -6,7 +6,7 @@ export class ConfigService {
 
   baseUrl: string = "http://localhost:8080/";
   contentTypeHeader = new HttpHeaders({'Content-Type':'application/json'});
-  authorizationHeader = new HttpHeaders({'Content-Type': 'application/json', 'Authorization' : this.getToken()});
+  authorizationHeader = new HttpHeaders({'Content-Type': 'application/json', 'Authorization' : localStorage.getItem("token")});
 
   constructor() { }
 

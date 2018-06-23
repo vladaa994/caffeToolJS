@@ -1,0 +1,13 @@
+.game {
+	
+	width: 250px;
+	height: 200px;
+	border-radius: 5px;
+	border: 2px solid #000;
+	margin-top: 5%;
+	margin-bottom: 10%;
+	text-align: center;
+	padding-top: 2%;
+	background-color: #ccff99;
+	/*opacity: 0.5;*/
+}

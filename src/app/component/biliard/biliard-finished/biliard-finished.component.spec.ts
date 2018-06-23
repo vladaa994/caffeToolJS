@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BiliardComponent } from './biliard.component';
+import { BiliardFinishedComponent } from './biliard-finished.component';
 
-describe('BiliardComponent', () => {
-  let component: BiliardComponent;
-  let fixture: ComponentFixture<BiliardComponent>;
+describe('BiliardFinishedComponent', () => {
+  let component: BiliardFinishedComponent;
+  let fixture: ComponentFixture<BiliardFinishedComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BiliardComponent ]
+      declarations: [ BiliardFinishedComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BiliardComponent);
+    fixture = TestBed.createComponent(BiliardFinishedComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

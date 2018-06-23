@@ -1,0 +1,35 @@
+<div class="createGame">
+<form #f="ngForm" (ngSubmit)="createGame(f)">
+	<div class="form-group">
+		<mat-radio-group>
+			  <mat-radio-button *ngFor="let v of radioButtons" [value]="v"  (change) = "radioChange($event)" >
+			  {{ v }}</mat-radio-button>
+		</mat-radio-group>
+	</div>
+	
+	<div *ngIf="game.type == 'Free' ">
+		<mat-form-field>
+			<mat-select name="tableNumber" [(ngModel)] = "game.tableNumber" placeholder="Choose table number" required>
+				<mat-option *ngFor="let table of tableNumbers" [value]="table">{{ table }}</mat-option>
+			</mat-select>
+		</mat-form-field>
+	</div>
+	
+	<div *ngIf="game.type == 'League' ">
+		<mat-form-field>
+			<mat-select name="tableNumber" required [(ngModel)] = "game.tableNumber" placeholder="Choose table number">
+				<mat-option>--</mat-option>
+				<mat-option *ngFor="let table of tableNumbers" [value]="table">{{ table }}</mat-option>
+			</mat-select>
+		</mat-form-field><br>
+
+		<mat-form-field>
+				<mat-select name="player" required multiple [(ngModel)] = "game.players" (change)="multiPlayers($event)" placeholder="Choose players">
+					<mat-option *ngFor="let player of playerService.activePlayers" value="{{player.id}}" >{{player.firstname | titlecase}} {{ player.lastname | titlecase }}</mat-option>
+				</mat-select>
+			</mat-form-field>
+	</div>
+
+	<button type="submit" [disabled] = "!isValid" mat-raised-button color="primary">Start Game</button>
+</form>
+</div>

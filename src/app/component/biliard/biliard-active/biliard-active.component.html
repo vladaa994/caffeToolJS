@@ -1,0 +1,39 @@
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="../biliard">Active games</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="game-finished">Finished games</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="game-create">Create game</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="col-md-4">
+			<div class="game" *ngFor="let game of biliardService.activeGames">
+				<p class="gameType">Game type: {{ game.type }}</p>
+        <p class="gameTime">Started at: {{ game.startTime | date: 'HH:mm:ss a' }} </p>
+        <p *ngIf="game.endTime != null">Game finished at: {{ game.endTime | date: 'HH:mm:ss a' }}</p>
+        <p class="gameTable">Table number: {{ game.tableNumber }}</p>
+				<p class="gameCreatedBy">Game created by: {{ waiter }}</p>
+        <button mat-raised-button color="warn" *ngIf="game.endTime == null" (click)="finishGame(game.id)">Finish</button>
+        <button mat-raised-button color="accent" (click)="payGame(game.id)">Pay for game</button>
+			</div>
+		</div>
+		<div class="col-md-8">
+			<router-outlet></router-outlet>
+		</div>
+	</div>
+</div>

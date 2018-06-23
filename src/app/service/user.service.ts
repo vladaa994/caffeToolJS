@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Compiler } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { Token } from '../model/token';
@@ -8,7 +8,6 @@ import 'rxjs/Rx';
 import { User } from '../model/user';
 import { ConfigService } from './config.service';
 
-
 @Injectable()
 export class UserService {
 
@@ -16,21 +15,23 @@ export class UserService {
   activeUsers: User[];
   removedUsers: User[];
   errorMsg: string = "";
+  token = localStorage.getItem("token");
 
-  constructor(private http : HttpClient, private router : Router, private config : ConfigService) { 
+  constructor(private http : HttpClient, private router : Router, private config : ConfigService, private compiler : Compiler) { 
   }
 
   login(user : NgForm) { 
-    return this.http.post<Token>(this.config.baseUrl + "/login" , user, {headers: this.config.contentTypeHeader})
-    .map(
-    	(response) => {
-    		return response;
-    	}
-    );
+    return this.http.post<Token>(this.config.baseUrl + "/login" , user, {headers: this.config.contentTypeHeader});
+  }
+
+  getCurrentUser() : Observable<User>{
+    return this.http.get<User>(this.config.baseUrl + "user/current-user", {headers: {'Authorization': localStorage.getItem("token")}});
   }
 
   logout() {
-  	localStorage.removeItem("token");
+    localStorage.removeItem("token");
+    sessionStorage.removeItem("userId");
+    sessionStorage.removeItem("username");
   	this.router.navigate(['']);
   }
 
@@ -44,14 +45,11 @@ export class UserService {
   }
 
   getActiveUsers() {
-    return this.http.get<User[]>(this.config.baseUrl + "/user/all/active", {headers: this.config.authorizationHeader})
-    .map(
-      (response) => {
-        return response;
-      }
-      ).subscribe(
+    return this.http.get<User[]>(this.config.baseUrl + "/user/all/active", {headers: {'Authorization': localStorage.getItem("token")}})
+      .subscribe(
         (data) => {
-          this.activeUsers = data;
+            this.activeUsers = data;  
+            console.log(typeof(data));
         },
         (error) => {
           if(error["error"]["status"] == 403){
@@ -65,7 +63,7 @@ export class UserService {
   }
 
   getRemovedUsers() {
-     return this.http.get<User[]>(this.config.baseUrl + "/user/all/removed", {headers: this.config.authorizationHeader})
+     return this.http.get<User[]>(this.config.baseUrl + "/user/all/removed", {headers: {'Authorization': localStorage.getItem("token")}})
       .map(
           (response) => {
             return response;
@@ -78,7 +76,7 @@ export class UserService {
   }
 
   create(user: NgForm) : Observable<User> {
-      return this.http.post<User>(this.config.baseUrl + "/user/save", user, {headers: this.config.authorizationHeader})
+      return this.http.post<User>(this.config.baseUrl + "/user/save", user, {headers: {'Authorization': localStorage.getItem("token")}})
       .map(
           (response) => {
             return response;
@@ -87,7 +85,7 @@ export class UserService {
   }
 
   editUser(userId : number) : Observable<User> {
-    return this.http.get<User>(this.config.baseUrl + "/user/" + userId, {headers: this.config.authorizationHeader})
+    return this.http.get<User>(this.config.baseUrl + "/user/" + userId, {headers: {'Authorization': localStorage.getItem("token")}})
       .map(
           (result) => {
             return result;
@@ -96,7 +94,7 @@ export class UserService {
   }
 
   update(user : User) : Observable<User> {
-    return this.http.put<User>(this.config.baseUrl + "/user/update/" + user.id, user, {headers: this.config.authorizationHeader})
+    return this.http.put<User>(this.config.baseUrl + "/user/update/" + user.id, user, {headers: {'Authorization': localStorage.getItem("token")}})
       .map(
           (response) => {
             return response
@@ -105,7 +103,7 @@ export class UserService {
   }
 
   delete(id: number) : Observable<any> {
-     return this.http.get(this.config.baseUrl + "/user/delete/" + id, {headers: this.config.authorizationHeader})
+     return this.http.get(this.config.baseUrl + "/user/delete/" + id, {headers: {'Authorization': localStorage.getItem("token")}})
      .map(
         (data) => {
           return data;
@@ -121,7 +119,7 @@ export class UserService {
       params: {
         username: username
       },
-      headers: this.config.authorizationHeader
+      headers: {'Authorization': localStorage.getItem("token")}
     }).map(
       (response) => {
         return response;
@@ -137,7 +135,7 @@ export class UserService {
       params: {
         id: id
       },
-      headers: this.config.authorizationHeader
+      headers: {'Authorization': localStorage.getItem("token")}
     }).map(
       (response) => {
         return response;

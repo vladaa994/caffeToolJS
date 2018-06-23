@@ -4,7 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { Routes, RouterModule } from '@angular/router';
-import { MaterialAppModule } from './ngmaterial.module';
+import {  MatButtonModule } from '@angular/material';
+import { MatFormFieldModule } from '@angular/material';
+import { MatInputModule } from '@angular/material';
+import { MatSelectModule } from '@angular/material';
+import { CommonModule } from '@angular/common';
+import { MatRadioModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './component/login/login.component';
@@ -13,7 +18,6 @@ import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { AuthGuard } from './auth.guard';
 import { UserService } from './service/user.service';
 import { CheckLoggedInGuard } from './check-logged-in.guard';
-import { BiliardComponent } from './component/biliard/biliard.component';
 import { UserCreateComponent } from './component/user/user-create/user-create.component';
 import { RoleService } from './service/role.service';
 import { ConfigService } from './service/config.service';
@@ -26,7 +30,11 @@ import { PlayerCreateComponent } from './component/player/player-create/player-c
 import { PlayerDeletedComponent } from './component/player/player-deleted/player-deleted.component';
 import { PlayerEditComponent } from './component/player/player-edit/player-edit.component';
 import { PlayerService } from './service/player.service';
-
+import { BiliardActiveComponent } from './component/biliard/biliard-active/biliard-active.component';
+import { BiliardFinishedComponent } from './component/biliard/biliard-finished/biliard-finished.component';
+import { BiliardCreateComponent } from './component/biliard/biliard-create/biliard-create.component';
+import { BiliardService } from './service/biliard.service';
+import { DatePipe } from '@angular/common';
  
 const routes : Routes = [
   {
@@ -79,8 +87,18 @@ const routes : Routes = [
   },
   {
     path: 'biliard',
-    component: BiliardComponent,
-    canActivate: [AuthGuard]
+    component: BiliardActiveComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'game-finished',
+        component: BiliardFinishedComponent
+      },
+      {
+        path: 'game-create',
+        component: BiliardCreateComponent
+      }
+    ]
   },
   {
     path: "**",
@@ -96,7 +114,6 @@ const routes : Routes = [
     LoginComponent,
     UserComponent,
     DashboardComponent,
-    BiliardComponent,
     UserCreateComponent,
     UserDeletedComponent,
     UserEditComponent,
@@ -104,6 +121,9 @@ const routes : Routes = [
     PlayerCreateComponent,
     PlayerDeletedComponent,
     PlayerEditComponent,
+    BiliardActiveComponent,
+    BiliardFinishedComponent,
+    BiliardCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -113,7 +133,11 @@ const routes : Routes = [
     AngularFontAwesomeModule,
     RouterModule.forRoot(routes),
     ToastrModule.forRoot(),
-    MaterialAppModule
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatRadioModule
   ],
   providers: [
     AuthGuard,
@@ -121,7 +145,9 @@ const routes : Routes = [
     CheckLoggedInGuard,
     RoleService,
     ConfigService,
-    PlayerService
+    PlayerService,
+    BiliardService,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })
