@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from './service/user.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-root',
@@ -13,5 +14,12 @@ export class AppComponent {
     
   }
 
+  username :string;
   year = new Date().getFullYear();
+  usernameObserver = this.userService.userLoggedIn.subscribe(
+  		(data) => {
+  			this.username = data;
+  		}
+  	)
+
 }

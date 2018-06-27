@@ -14,11 +14,11 @@ export class DashboardComponent implements OnInit{
   }
 
   ngOnInit() {
+    this.userService.isTokenExpired();
     this.userService.getCurrentUser()
       .subscribe(
           (user) => {
               sessionStorage.setItem("userId", user.id.toString());
-              sessionStorage.setItem("username", user.username);
           },
           (error) => {
             console.log(error);

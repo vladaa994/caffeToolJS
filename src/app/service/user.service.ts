@@ -7,6 +7,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 import { User } from '../model/user';
 import { ConfigService } from './config.service';
+import { Subject } from 'rxjs/Subject';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class UserService {
@@ -16,6 +18,8 @@ export class UserService {
   removedUsers: User[];
   errorMsg: string = "";
   token = localStorage.getItem("token");
+  userLoggedIn = new Subject<string>();
+  jwt = new JwtHelperService();
 
   constructor(private http : HttpClient, private router : Router, private config : ConfigService, private compiler : Compiler) { 
   }
@@ -28,11 +32,18 @@ export class UserService {
     return this.http.get<User>(this.config.baseUrl + "user/current-user", {headers: {'Authorization': localStorage.getItem("token")}});
   }
 
+  isTokenExpired() {
+    if(this.jwt.isTokenExpired(localStorage.getItem("token")) == true) {
+       this.logout();
+    }
+  } 
+
   logout() {
     localStorage.removeItem("token");
     sessionStorage.removeItem("userId");
     sessionStorage.removeItem("username");
-  	this.router.navigate(['']);
+  	// this.router.navigate(['']);
+    location.reload(true);
   }
 
   isLoggedIn() : boolean {
@@ -49,7 +60,6 @@ export class UserService {
       .subscribe(
         (data) => {
             this.activeUsers = data;  
-            console.log(typeof(data));
         },
         (error) => {
           if(error["error"]["status"] == 403){

@@ -16,6 +16,9 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit(){
+    if(this.userService.isTokenExpired()) {
+      this.userService.logout();
+    }
     this.userService.getActiveUsers();
   }
 

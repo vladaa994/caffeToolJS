@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BiliardService } from '../../../service/biliard.service';
 import { ToastrService } from 'ngx-toastr';
+import { UserService } from '../../../service/user.service';
 
 @Component({
   selector: 'app-biliard-active',
@@ -9,13 +10,16 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class BiliardActiveComponent implements OnInit {
 
-  constructor(private biliardService : BiliardService, private toastr: ToastrService) { }
+  constructor(private biliardService : BiliardService, private toastr: ToastrService, private userService: UserService) { }
 
   waiter : string;
 
   ngOnInit() {
   	this.waiter = sessionStorage.getItem("username");
   	this.biliardService.getActiveGames();
+    if(this.userService.isTokenExpired()) {
+      this.userService.logout();
+    }
   }
 
   finishGame(id) {

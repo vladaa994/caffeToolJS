@@ -35,6 +35,8 @@ import { BiliardFinishedComponent } from './component/biliard/biliard-finished/b
 import { BiliardCreateComponent } from './component/biliard/biliard-create/biliard-create.component';
 import { BiliardService } from './service/biliard.service';
 import { DatePipe } from '@angular/common';
+import { JwtModule } from '@auth0/angular-jwt';
+
  
 const routes : Routes = [
   {
@@ -107,7 +109,6 @@ const routes : Routes = [
 
 ];
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -137,7 +138,16 @@ const routes : Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatRadioModule
+    MatRadioModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem("token")
+        },
+        whitelistedDomains: ['localhost:8080'],
+        blacklistedRoutes: ['localhost:8080/login']
+      }
+    })
   ],
   providers: [
     AuthGuard,
