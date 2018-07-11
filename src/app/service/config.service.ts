@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ConfigService {
 
-  baseUrl: string = "http://localhost:8080/";
+  baseUrl: string = environment.API_URL;
   contentTypeHeader = new HttpHeaders({'Content-Type':'application/json'});
   authorizationHeader = new HttpHeaders({'Content-Type': 'application/json', 'Authorization' : localStorage.getItem("token")});
 

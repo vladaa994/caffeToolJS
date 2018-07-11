@@ -23,11 +23,12 @@
 	<div class="col-md-12">
 		<div class="col-md-4">
 			<div class="game" *ngFor="let game of biliardService.activeGames">
-				<p class="gameType">Game type: {{ game.type }}</p>
-        <p class="gameTime">Started at: {{ game.startTime | date: 'HH:mm:ss a' }} </p>
-        <p *ngIf="game.endTime != null">Game finished at: {{ game.endTime | date: 'HH:mm:ss a' }}</p>
-        <p class="gameTable">Table number: {{ game.tableNumber }}</p>
-				<p class="gameCreatedBy">Game created by: {{ waiter }}</p>
+				<p class="gameType">Game type: <strong>{{ game.type }}</strong></p>
+        <p class="gameTime">Started at: <strong>{{ game.startTime | date: 'HH:mm:ss a' }}</strong> </p>
+        <p *ngIf="game.endTime != null">Game finished at: <strong>{{ game.endTime | date: 'HH:mm:ss a' }}</strong></p>
+        <p class="gameTable">Table number: <strong>{{ game.tableNumber }}</strong></p>
+        <p *ngIf="game.bill != null" class="gameBill">Bill: <strong>{{ game.bill }}</strong></p>
+				<p class="gameCreatedBy">Game created by: <strong>{{ waiter }}</strong></p>
         <button mat-raised-button color="warn" *ngIf="game.endTime == null" (click)="finishGame(game.id)">Finish</button>
         <button mat-raised-button color="accent" (click)="payGame(game.id)">Pay for game</button>
 			</div>

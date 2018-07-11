@@ -9,6 +9,8 @@ import { UserService } from '../../../service/user.service'
 })
 export class BiliardFinishedComponent implements OnInit {
 
+  page : number = 0;
+
   constructor(private biliardService : BiliardService, private userService : UserService) { }
 
   ngOnInit() {
@@ -16,6 +18,12 @@ export class BiliardFinishedComponent implements OnInit {
       this.userService.logout();
     }
   	this.biliardService.getFinishedGames();
+  }
+
+  setPage(page: number, event : any) {
+    event.preventDefault();
+    this.biliardService.page = page;
+    this.biliardService.getFinishedGames();
   }
 
 }

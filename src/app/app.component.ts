@@ -14,8 +14,10 @@ export class AppComponent {
     
   }
 
-  username :string;
+
   year = new Date().getFullYear();
+  username: string = "";
+  
   usernameObserver = this.userService.userLoggedIn.subscribe(
   		(data) => {
   			this.username = data;

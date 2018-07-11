@@ -15,7 +15,7 @@ export class BiliardActiveComponent implements OnInit {
   waiter : string;
 
   ngOnInit() {
-  	this.waiter = sessionStorage.getItem("username");
+  	this.waiter = localStorage.getItem("username");
   	this.biliardService.getActiveGames();
     if(this.userService.isTokenExpired()) {
       this.userService.logout();

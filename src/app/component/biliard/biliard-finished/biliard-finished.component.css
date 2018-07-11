@@ -1,0 +1,20 @@
+.gameFinished {
+	/*width:350px;*/
+	border-radius: 10px;
+	border: 1px solid #000;
+	margin-bottom: 5%;
+	margin-top: 5%;
+}
+
+.gameFinished p {
+	text-align: center;
+	padding-top: 10px;
+}
+
+.playersList h4 {
+	text-align: center;
+}
+
+.paginationElement a{
+	margin-right: 5px;
+}

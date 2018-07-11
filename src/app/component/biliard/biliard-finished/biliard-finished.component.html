@@ -1,3 +1,23 @@
-<p>
-  biliard-finished works!
-</p>
+<div class="row">
+	<div class="col-md-4" *ngFor="let game of biliardService.finishedGames">
+		<div class="gameFinished" >
+			<p>Game type: <strong> {{ game.type }} </strong></p> 
+			<p>Table number : <strong>{{ game.tableNumber }} </strong></p>
+			<p>Started at: <strong> {{ game.startTime | date : 'yyyy-MM-dd HH:mm:ss' }} </strong></p>
+			<p>Finished at: <strong> {{ game.endTime | date : 'yyyy-MM-dd HH:mm:ss' }} </strong></p>
+			<div class="playersList" *ngIf="game.players.length > 0">
+				<h4>Players:</h4> 
+				<p *ngFor="let player of game.players">
+					<strong> {{ player.firstname }} {{ player.lastname }} </strong>
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<ul class="nav nav-pills">
+		  <li class="nav-item paginationElement" *ngFor="let p of biliardService.pages; let i = index">
+		    <a class="nav-link active" href="#" (click)="setPage(i, $event)">{{ i }}</a>
+		  </li>
+		</ul>	
+	</div>
+</div>

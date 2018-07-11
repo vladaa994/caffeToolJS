@@ -22,10 +22,12 @@ export class LoginComponent {
       .subscribe(
         (data) => {
             localStorage.setItem("token", data.token);
+            localStorage.setItem("username", data.username);
             this.userService.userLoggedIn.next(data.username);
             this.router.navigate(['/dashboard']);
         },
         (error) => {
+            console.log(error);
            this.loginError = error["error"]["message"]
         }
       )

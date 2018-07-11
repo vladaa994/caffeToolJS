@@ -20,6 +20,7 @@ export class BiliardCreateComponent implements OnInit {
 
   radioButtons : string[] = ["Free", "League"];
   tableNumbers: number[] = [1, 2, 3];
+  isValid: boolean = false;
 
   game: IGame = {
   	id: null,
@@ -45,20 +46,29 @@ export class BiliardCreateComponent implements OnInit {
   }
 
   radioChange(event) {
-  	this.game.type = event.value;
+  	 this.game.type = event.value;
+      if(event.value == "Free") {
+       this.isValid = true;
+     }
   }
 
-  multiPlayers(event) {
-    
+  checkIfTwoPlayersSelected(event) {
+    console.log(this.game.type);
+    if(event.value.length == 2) {
+      this.isValid = true;
+    }
      
   }
 
   createGame(form : NgForm) {
   	// this.game.startTime = this.datePipe.transform(new Date(), "yyyy-MM-dd HH:mm:ss"); 
     this.game.user = new User(+sessionStorage.getItem("userId"));
-    for(let i=0; i < this.game.players.length; i++) {
-       this.game.players[i] = new Player(+this.game.players[i])
+    if(this.game.players != null) {
+      for(let i=0; i < this.game.players.length; i++) {
+         this.game.players[i] = new Player(+this.game.players[i])
+      }  
     }
+    
   	this.biliardService.create(this.game)
   		.subscribe(
   			(response) => {

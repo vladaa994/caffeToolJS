@@ -29,7 +29,7 @@ export class UserService {
   }
 
   getCurrentUser() : Observable<User>{
-    return this.http.get<User>(this.config.baseUrl + "user/current-user", {headers: {'Authorization': localStorage.getItem("token")}});
+    return this.http.get<User>(this.config.baseUrl + "/user/current-user", {headers: {'Authorization': localStorage.getItem("token")}});
   }
 
   isTokenExpired() {
@@ -41,8 +41,7 @@ export class UserService {
   logout() {
     localStorage.removeItem("token");
     sessionStorage.removeItem("userId");
-    sessionStorage.removeItem("username");
-  	// this.router.navigate(['']);
+    localStorage.removeItem("username");
     location.reload(true);
   }
 
@@ -141,7 +140,7 @@ export class UserService {
   }
 
   enableUser(id) {
-    return this.http.get(this.config.baseUrl + "user/enable",{
+    return this.http.get(this.config.baseUrl + "/user/enable",{
       params: {
         id: id
       },

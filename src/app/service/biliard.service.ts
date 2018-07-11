@@ -15,37 +15,48 @@ export class BiliardService {
 
   activeGames : IGame[];
   finishedGames : IGame[];
-
+  errorMsg: string = "";
+  page : number = 0;
+  pages: Array<number>;
 
   getActiveGames() {
-  	return this.http.get<IGame[]>(this.config.baseUrl + "game/all/active", {headers: {"Authorization":localStorage.getItem("token")}})
+  	return this.http.get<IGame[]>(this.config.baseUrl + "/game/all/active", {headers: {"Authorization":localStorage.getItem("token")}})
   		.subscribe(
   			(result) => {
+          console.log(result);
   				this.activeGames = result;
-  			}
+  			},
+        (error) => {
+           if(error["error"]["status"] == 403){
+           this.errorMsg = "You are not allowed to see this page!";
+           setTimeout(() => {
+              this.router.navigate(['/dashboard']);
+           }, 3500);
+      }
+    }
   		)
   }
 
   getFinishedGames() {
-  	return this.http.get<IGame[]>(this.config.baseUrl + "game/all/finished", {headers: {"Authorization":localStorage.getItem("token")}})
+    return this.http.get<IGame[]>(this.config.baseUrl + "/game/findall/" + this.page + "-" + 3, { headers: { "Authorization": localStorage.getItem("token") } })
   		.subscribe(
   			(result) => {
-          console.log(result);
-  				this.finishedGames = result;
+  				this.finishedGames = result["content"];
+          this.pages = new Array(result["totalPages"]);
   			}
   		)
   }
 
   create(game : IGame) : Observable<IGame> {
-  		return this.http.post<IGame>(this.config.baseUrl + "game/save", game, {headers: {"Authorization":localStorage.getItem("token")}});
+  		return this.http.post<IGame>(this.config.baseUrl + "/game/save", game, {headers: {"Authorization":localStorage.getItem("token")}});
   }
 
   finishGame(id : number) : Observable<IGame> {
-  	return this.http.get<IGame>(this.config.baseUrl + "game/finish/" + id, {headers: {"Authorization":localStorage.getItem("token")}});
+  	return this.http.get<IGame>(this.config.baseUrl + "/game/finish/" + id, {headers: {"Authorization":localStorage.getItem("token")}});
   }
 
   payGame(id : number) : Observable<IGame> {
-  	return this.http.get<IGame>(this.config.baseUrl + "game/pay/" + id, {headers: {"Authorization":localStorage.getItem("token")}})
+  	return this.http.get<IGame>(this.config.baseUrl + "/game/pay/" + id, {headers: {"Authorization":localStorage.getItem("token")}})
   }
 
 }
