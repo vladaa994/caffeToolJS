@@ -27,7 +27,7 @@
 				<tr *ngFor="let player of playerService.activePlayers; let i = index">
 					<td>{{ i+1 }}</td>
 					<td>{{ player?.firstname }}</td>
-					<td>{{ player?.lastname }}</td>
+					<td><a [routerLink]="['../player-details', player.id]">{{ player?.lastname }}</a></td>
 					<td>{{ player?.win }}</td>
 					<td>{{ player?.lost }}</td>
 					<td><button mat-raised-button color="accent" [routerLink]="['edit-player', player?.id]">Edit</button></td>

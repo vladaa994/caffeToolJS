@@ -36,6 +36,7 @@ import { BiliardCreateComponent } from './component/biliard/biliard-create/bilia
 import { BiliardService } from './service/biliard.service';
 import { DatePipe } from '@angular/common';
 import { JwtModule } from '@auth0/angular-jwt';
+import { PlayerDetailsComponent } from './component/player/player-details/player-details.component';
 
  
 const routes : Routes = [
@@ -83,6 +84,11 @@ const routes : Routes = [
     ]
   },
   {
+    path: 'player-details/:id',
+    component: PlayerDetailsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard]
@@ -124,7 +130,8 @@ const routes : Routes = [
     PlayerEditComponent,
     BiliardActiveComponent,
     BiliardFinishedComponent,
-    BiliardCreateComponent
+    BiliardCreateComponent,
+    PlayerDetailsComponent
   ],
   imports: [
     BrowserModule,

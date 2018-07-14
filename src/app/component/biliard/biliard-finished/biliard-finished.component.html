@@ -3,6 +3,7 @@
 		<div class="gameFinished" >
 			<p>Game type: <strong> {{ game.type }} </strong></p> 
 			<p>Table number : <strong>{{ game.tableNumber }} </strong></p>
+			<p>Bill: <strong>{{ game.bill }}</strong></p>
 			<p>Started at: <strong> {{ game.startTime | date : 'yyyy-MM-dd HH:mm:ss' }} </strong></p>
 			<p>Finished at: <strong> {{ game.endTime | date : 'yyyy-MM-dd HH:mm:ss' }} </strong></p>
 			<div class="playersList" *ngIf="game.players.length > 0">
@@ -13,6 +14,9 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+<div class="row">
 	<div class="col-md-6">
 		<ul class="nav nav-pills">
 		  <li class="nav-item paginationElement" *ngFor="let p of biliardService.pages; let i = index">

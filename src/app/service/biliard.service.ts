@@ -23,7 +23,6 @@ export class BiliardService {
   	return this.http.get<IGame[]>(this.config.baseUrl + "/game/all/active", {headers: {"Authorization":localStorage.getItem("token")}})
   		.subscribe(
   			(result) => {
-          console.log(result);
   				this.activeGames = result;
   			},
         (error) => {
@@ -55,8 +54,9 @@ export class BiliardService {
   	return this.http.get<IGame>(this.config.baseUrl + "/game/finish/" + id, {headers: {"Authorization":localStorage.getItem("token")}});
   }
 
-  payGame(id : number) : Observable<IGame> {
-  	return this.http.get<IGame>(this.config.baseUrl + "/game/pay/" + id, {headers: {"Authorization":localStorage.getItem("token")}})
+  payGame(id : number, winnerId: number, lost: number) : Observable<IGame> {
+  	return this.http.get<IGame>(this.config.baseUrl + "/game/pay/" + id + "/winner/" + winnerId + 
+      "/lost/" + lost, {headers: {"Authorization":localStorage.getItem("token")}})
   }
 
 }

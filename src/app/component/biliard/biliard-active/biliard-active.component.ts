@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BiliardService } from '../../../service/biliard.service';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../../service/user.service';
+import { IGame } from '../../../interface/igame';
 
 @Component({
   selector: 'app-biliard-active',
@@ -13,6 +14,9 @@ export class BiliardActiveComponent implements OnInit {
   constructor(private biliardService : BiliardService, private toastr: ToastrService, private userService: UserService) { }
 
   waiter : string;
+  winner: number;
+  lost: number;
+
 
   ngOnInit() {
   	this.waiter = localStorage.getItem("username");
@@ -21,6 +25,7 @@ export class BiliardActiveComponent implements OnInit {
       this.userService.logout();
     }
   }
+
 
   finishGame(id) {
   	this.biliardService.finishGame(id)
@@ -33,8 +38,15 @@ export class BiliardActiveComponent implements OnInit {
   		)
   }
 
-  payGame(id: number) {
-  	this.biliardService.payGame(id)
+  payGame(game: IGame) {
+    
+    for(let i=0; i < game.players.length; i++) {
+      if(game.players[i].id != this.winner){
+         this.lost = game.players[i].id;
+      }
+    }
+
+  	this.biliardService.payGame(game.id, +this.winner, this.lost)
   		.subscribe(
   			(result) => {
   				this.toastr.success("Game paid successfully");

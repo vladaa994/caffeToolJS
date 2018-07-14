@@ -66,6 +66,10 @@ export class PlayerService {
   	return this.http.get(this.config.baseUrl + "/player/enable/" + id, {headers: {'Authorization': localStorage.getItem("token")}});
   }
 
+  getPlayerById(id: number): Observable<IPlayer> {
+    return this.http.get<IPlayer>(this.config.baseUrl + "/player/" + id, {headers: {'Authorization': localStorage.getItem("token")}});
+  }
+
   resetForm(form? : NgForm) {
     if(form != null) {
       form.reset();

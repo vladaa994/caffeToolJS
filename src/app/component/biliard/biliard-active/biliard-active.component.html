@@ -27,10 +27,16 @@
         <p class="gameTime">Started at: <strong>{{ game.startTime | date: 'HH:mm:ss a' }}</strong> </p>
         <p *ngIf="game.endTime != null">Game finished at: <strong>{{ game.endTime | date: 'HH:mm:ss a' }}</strong></p>
         <p class="gameTable">Table number: <strong>{{ game.tableNumber }}</strong></p>
+        <p *ngIf="game.players.length != 0" align="center">{{ game.players[0].firstname}} {{game.players[0].lastname}} - {{ game.players[1].firstname}} {{ game.players[1].lastname}}</p>
         <p *ngIf="game.bill != null" class="gameBill">Bill: <strong>{{ game.bill }}</strong></p>
 				<p class="gameCreatedBy">Game created by: <strong>{{ waiter }}</strong></p>
+        <p *ngIf="game.type == 'League' && game.endTime != null">Winner: 
+          <mat-select name="player" required [(ngModel)]="winner" placeholder="Select winner">
+              <mat-option *ngFor="let player of game.players" value="{{ player.id }}">{{ player.firstname }} {{ player.lastname }}</mat-option>  
+          </mat-select>
+        </p>
         <button mat-raised-button color="warn" *ngIf="game.endTime == null" (click)="finishGame(game.id)">Finish</button>
-        <button mat-raised-button color="accent" (click)="payGame(game.id)">Pay for game</button>
+        <button mat-raised-button color="accent" (click)="payGame(game)">Pay for game</button>
 			</div>
 		</div>
 		<div class="col-md-8">

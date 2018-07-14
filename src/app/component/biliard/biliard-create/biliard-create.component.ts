@@ -53,7 +53,6 @@ export class BiliardCreateComponent implements OnInit {
   }
 
   checkIfTwoPlayersSelected(event) {
-    console.log(this.game.type);
     if(event.value.length == 2) {
       this.isValid = true;
     }
