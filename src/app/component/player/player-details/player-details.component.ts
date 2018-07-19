@@ -12,10 +12,11 @@ export class PlayerDetailsComponent implements OnInit {
 
   player : IPlayer = {
   	id: 0,
-	firstname: "",
-	lastname: "",
-	win: 0,
-	lost: 0
+  	firstname: "",
+  	lastname: "",
+  	win: 0,
+  	lost: 0,
+    image: null
   }
 
   constructor(private playerService: PlayerService, private activatedRoute : ActivatedRoute) { }
@@ -27,7 +28,6 @@ export class PlayerDetailsComponent implements OnInit {
   				.subscribe(
   					(data) => {
   						this.player = data;
-  						console.log(data);
   					},
   					(error) => {
   						console.log(error);
@@ -36,4 +36,5 @@ export class PlayerDetailsComponent implements OnInit {
   		}
   	)
   }
+
 }

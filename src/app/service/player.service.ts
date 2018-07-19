@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { IPlayer } from '../interface/iplayer';
+import { IPlayerDto } from '../interface/iplayerDto';
 import { ConfigService } from '../service/config.service';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -14,6 +15,7 @@ export class PlayerService {
   activePlayers : IPlayer[];
   removedPlayers: IPlayer[];
   errorMsg: string = "";
+  image: string = "assets/images/defaultImage.png";
 
   constructor(private http: HttpClient, private config : ConfigService, private router: Router) { }
 
@@ -58,8 +60,8 @@ export class PlayerService {
   }
 
   //function to update player
-  update(player : IPlayer) : Observable<IPlayer> {
-  	return this.http.put<IPlayer>(this.config.baseUrl + "/player/update/" + player.id, player, {headers: {'Authorization': localStorage.getItem("token")}});
+  update(id, formData) : Observable<IPlayer> {
+  	return this.http.put<IPlayer>(this.config.baseUrl + "/player/update/" + id, formData,{headers: {'Authorization': localStorage.getItem("token")}});
   }
 
   enablePlayer(id : number) {
@@ -69,6 +71,14 @@ export class PlayerService {
   getPlayerById(id: number): Observable<IPlayer> {
     return this.http.get<IPlayer>(this.config.baseUrl + "/player/" + id, {headers: {'Authorization': localStorage.getItem("token")}});
   }
+
+
+  //not used now 
+  // uploadImage(file: File) : Observable<any> {
+  //   let formData: FormData = new FormData();
+  //   formData.append("file", file, file.name);
+  //   return this.http.post(this.config.baseUrl + "/player/upload-image", formData, {headers: {'Authorization': localStorage.getItem("token")}});
+  // }
 
   resetForm(form? : NgForm) {
     if(form != null) {
@@ -80,6 +90,7 @@ export class PlayerService {
       lastname: "",
       win: null,
       lost: null,
+      image: null
     }
   }
 

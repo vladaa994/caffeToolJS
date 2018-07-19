@@ -1,4 +1,25 @@
-<h3>{{ player.firstname }} {{ player.lastname }}</h3>
+<a routerLink="../../players" >Back</a>
 
-<p>Win: {{ player.win }}</p>
-<p>Lost: {{ player.lost }}</p>
+<div class="profile-details">
+	<div class="row">
+		<div class="col-md-8">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="player-profile">
+						<h3>{{ player.firstname }} {{ player.lastname }}</h3>
+						<p>Win: {{ player.win }}</p>
+						<p>Lost: {{ player.lost }}</p>			
+					</div>		
+				</div>
+				<div class="col-md-4">
+					<div class="profile-image">
+						<img width="150px" height="150px" [src]="player.image != null ? player.image : playerService.image" alt="profile picture" />
+					</div><br>
+				</div>
+			</div>			
+		</div>
+	</div>	
+</div>
+
+
+

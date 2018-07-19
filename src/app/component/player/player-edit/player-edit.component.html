@@ -12,6 +12,11 @@
 			<input matInput name="lastname" placeholder="Lastname" #lastname="ngModel"  [(ngModel)] = "editPlayer.lastname" >
 		</mat-form-field>	
 	</div>
+
+	<div class="form-group">
+		<input type="file" name="image" (change)="changeSelect($event)"><br>
+		<!-- <button mat-raised-button color="primary" (click)="uploadImage()">Upload</button>		 -->
+	</div>
 	
 	<button mat-raised-button color="primary">Update</button>
 </form>
