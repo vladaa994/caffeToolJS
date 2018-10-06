@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { IPlayer } from '../interface/iplayer';
-import { IPlayerDto } from '../interface/iplayerDto';
 import { ConfigService } from '../service/config.service';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';

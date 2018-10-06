@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PlayerService } from '../../../service/player.service';
-import { IPlayerDto } from '../../../interface/iplayerDto';
 import { IPlayer} from '../../../interface/iplayer';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
